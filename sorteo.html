@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Draw</title>
+    <style>
+        /* Basic styles */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #333; /* Fondo negro */
+            color: #fff; /* Texto blanco */
+        }
+        #word-list {
+            width: 50%;
+            margin: 20px auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #ffe6e6; /* Fondo rosado claro */
+        }
+        #draw {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #ff69b4; /* Botón rosado */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #draw:hover {
+            background-color: #ff99cc; /* Botón rosado hover */
+        }
+        #reset {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #ff69b4; /* Botón rosado */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #reset:hover {
+            background-color: #ff99cc; /* Botón rosado hover */
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Word Draw</h1>
+    <div id="word-list">
+        <h2>Enter the list of words:</h2>
+        <textarea id="words" rows="10" cols="30"></textarea>
+    </div>
+    <button id="draw">Draw a Word</button>
+    <button id="reset">Reset Draw</button>
+    <div id="result"></div>
+
+    <script>
+        // Get elements from DOM
+        const wordList = document.getElementById('word-list');
+        const drawButton = document.getElementById('draw');
+        const resetButton = document.getElementById('reset');
+        const result = document.getElementById('result');
+
+        // Variable to store drawn words
+        let drawnWords = [];
+
+        // Function to draw a word
+        function drawWord() {
+            // Get the list of words
+            const words = document.getElementById('words').value.trim().split('\n');
+
+            // Check if there are words in the list
+            if (words.length === 0) {
+                result.innerText = 'No words in the list';
+                return;
+            }
+
+            // Hide the word list
+            wordList.classList.add('hidden');
+
+            // Draw a word
+            let drawnWord;
+            do {
+                const randomIndex = Math.floor(Math.random() * words.length);
+                drawnWord = words[randomIndex];
+            } while (drawnWords.includes(drawnWord));
+
+            // Add the drawn word to the array
+            drawnWords.push(drawnWord);
+
+            // Show the result
+            result.innerText = 'The drawn word is: ' + drawnWord;
+
+            // Check if all words have been drawn
+            if (drawnWords.length === words.length) {
+                result.innerText += '\n\nAll words have been drawn.';
+                drawButton.disabled = true;
+            }
+        }
+
+        // Function to reset the draw
+        function resetDraw() {
+            drawnWords = [];
+            result.innerText = '';
+            wordList.classList.remove('hidden');
+            drawButton.disabled = false;
+        }
+
+        // Add events to buttons
+        drawButton.addEventListener('click', drawWord);
+        resetButton.addEventListener('click', resetDraw);
+    </script>
+</body>
+</html>
