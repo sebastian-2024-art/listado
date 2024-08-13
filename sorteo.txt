@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteo de palabras</title>
+    <style>
+        /* Estilos básicos */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #lista-palabras {
+            width: 50%;
+            margin: 20px auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #sorteo {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #sorteo:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sorteo de palabras</h1>
+    <div id="lista-palabras">
+        <h2>Ingrese la lista de palabras:</h2>
+        <textarea id="palabras" rows="10" cols="30"></textarea>
+    </div>
+    <button id="sorteo">Realizar sorteo</button>
+    <div id="resultado"></div>
+
+    <script>
+        // Obtener elementos del DOM
+        const listaPalabras = document.getElementById('palabras');
+        const botonSorteo = document.getElementById('sorteo');
+        const resultado = document.getElementById('resultado');
+
+        // Función para realizar el sorteo
+        function realizarSorteo() {
+            // Obtener la lista de palabras
+            const palabras = listaPalabras.value.trim().split('\n');
+
+            // Verificar si hay palabras en la lista
+            if (palabras.length === 0) {
+                resultado.innerText = 'No hay palabras en la lista';
+                return;
+            }
+
+            // Realizar el sorteo
+            const indiceAleatorio = Math.floor(Math.random() * palabras.length);
+            const palabraGanadora = palabras[indiceAleatorio];
+
+            // Mostrar el resultado
+            resultado.innerText = `La palabra ganadora es: ${palabraGanadora}`;
+        }
+
+        // Agregar evento al botón de sorteo
+        botonSorteo.addEventListener('click', realizarSorteo);
+    </script>
+</body>
+</html>
